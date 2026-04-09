@@ -1,0 +1,184 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890",
+    "name": "CRUD Operations Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Book",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"{{randomBookTitle}}\",\n  \"author\": \"John Doe\",\n  \"year\": 2023\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/books",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"]
+        },
+        "description": "Create a new book with a random title."
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Generate a random book title\nconst randomTitle = 'Book-' + Math.floor(Math.random() * 1000);\npm.collectionVariables.set('randomBookTitle', randomTitle);"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check response time\npm.test('Response time is less than 500ms', function () {\n  pm.expect(pm.response.responseTime).to.be.below(500);\n});\n\n// Check status code\npm.test('Status code is 201', function () {\n  pm.expect(pm.response.code).to.equal(201);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"]
+        },
+        "description": "Get all books."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check response time\npm.test('Response time is less than 500ms', function () {\n  pm.expect(pm.response.responseTime).to.be.below(500);\n});\n\n// Check status code\npm.test('Status code is 200', function () {\n  pm.expect(pm.response.code).to.equal(200);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Book by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/{{bookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "{{bookId}}"]
+        },
+        "description": "Get a book by its ID."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check response time\npm.test('Response time is less than 500ms', function () {\n  pm.expect(pm.response.responseTime).to.be.below(500);\n});\n\n// Check status code\npm.test('Status code is 200', function () {\n  pm.expect(pm.response.code).to.equal(200);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update Book",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Title\",\n  \"author\": \"Jane Doe\",\n  \"year\": 2024\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/books/{{bookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "{{bookId}}"]
+        },
+        "description": "Update a book by its ID."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check response time\npm.test('Response time is less than 500ms', function () {\n  pm.expect(pm.response.responseTime).to.be.below(500);\n});\n\n// Check status code\npm.test('Status code is 200', function () {\n  pm.expect(pm.response.code).to.equal(200);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete Book",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/{{bookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", "{{bookId}}"]
+        },
+        "description": "Delete a book by its ID."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check response time\npm.test('Response time is less than 500ms', function () {\n  pm.expect(pm.response.responseTime).to.be.below(500);\n});\n\n// Check status code\npm.test('Status code is 204', function () {\n  pm.expect(pm.response.code).to.equal(204);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.example.com",
+      "type": "string"
+    },
+    {
+      "key": "bookId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "randomBookTitle",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Set environment variables\npm.environment.set('userId', '12345');"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ]
+}
